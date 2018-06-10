@@ -4,10 +4,11 @@ public class CacheLine {
 
     private String tag;
     private String line;
+    private boolean hit;
 
-    public CacheLine(String tag, String line) {
-        this.tag = tag;
+    public CacheLine(String line) {
         this.line = line;
+        this.hit = false;
     }
 
     public String getTag() {
@@ -24,5 +25,13 @@ public class CacheLine {
 
     public void setLine(String line) {
         this.line = line;
+    }
+
+    public boolean isHit() {
+        return hit;
+    }
+
+    public void setHit(boolean hit) {
+        this.hit = hit;
     }
 }
