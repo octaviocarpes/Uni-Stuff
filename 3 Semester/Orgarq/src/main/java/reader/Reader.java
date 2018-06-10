@@ -30,8 +30,73 @@ public class Reader {
             }
 
             if (st.length() > 16){
+                StringBuilder sb = new StringBuilder();
                 String[] instructions = st.split(" - ");
-                System.out.println(instructions[0] + " - " + instructions[1] + " - " + instructions[2]);
+                sb.append(instructions[0].charAt(0));
+                sb.append(instructions[0].charAt(1));
+                sb.append(instructions[0].charAt(2));
+                sb.append(instructions[0].charAt(3));
+                sb.append(instructions[0].charAt(4));
+                sb.append(instructions[0].charAt(5));
+                sb.append(instructions[0].charAt(6));
+                sb.append(instructions[0].charAt(7));
+                sb.append(instructions[0].charAt(8));
+                sb.append(instructions[0].charAt(9));
+
+                String tag = sb.toString();
+
+                sb = new StringBuilder();
+
+                sb.append(instructions[0].charAt(10));
+                sb.append(instructions[0].charAt(11));
+                sb.append(instructions[0].charAt(12));
+                sb.append(instructions[0].charAt(13));
+
+                String line = sb.toString();
+
+                sb = new StringBuilder();
+
+                sb.append(instructions[0].charAt(14));
+                sb.append(instructions[0].charAt(15));
+
+                String word = sb.toString();
+
+                sb = new StringBuilder();
+
+                sb.append(instructions[2].charAt(0));
+                sb.append(instructions[2].charAt(1));
+                sb.append(instructions[2].charAt(2));
+                sb.append(instructions[2].charAt(3));
+                sb.append(instructions[2].charAt(4));
+                sb.append(instructions[2].charAt(5));
+                sb.append(instructions[2].charAt(6));
+                sb.append(instructions[2].charAt(7));
+                sb.append(instructions[2].charAt(8));
+                sb.append(instructions[2].charAt(9));
+
+                String instructionDataTag = sb.toString();
+
+                sb = new StringBuilder();
+
+                sb.append(instructions[2].charAt(10));
+                sb.append(instructions[2].charAt(11));
+                sb.append(instructions[2].charAt(12));
+                sb.append(instructions[2].charAt(13));
+
+                String instructionDataLine = sb.toString();
+
+                sb = new StringBuilder();
+
+                sb.append(instructions[2].charAt(14));
+                sb.append(instructions[2].charAt(15));
+
+                String instructionDataWord = sb.toString();
+
+                MemoryLine memoryLine = new MemoryLine(tag,line,word);
+                memoryLine.setInstruction( " : "  + instructions[1] + " - ");
+                memoryLine.setInstructionData(instructionDataTag + " - " + instructionDataLine + " - " + instructionDataWord);
+
+                cacheMap.add(memoryLine);
             }
 
             StringBuilder sb = new StringBuilder();

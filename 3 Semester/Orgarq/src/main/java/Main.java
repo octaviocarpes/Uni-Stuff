@@ -6,6 +6,10 @@ public class Main {
         Cache cache = new Cache();
         cache.populateMemory();
 
+        for (MemoryLine s:cache.getMemoryLine()
+             ) {
+            System.out.println(s);
+        }
 
 
 
