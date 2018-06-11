@@ -15,9 +15,25 @@ public class Main {
             e.printStackTrace();
         }
 
+        System.out.println();
+        System.out.println("Memory Addresses");
+        System.out.println();
+
+        for (String s: memory.getMemory()
+             ) {
+            System.out.println(s);
+        }
+
+        System.out.println();
+        System.out.println("Direct Mapping");
+        System.out.println();
+
         Cache cache = new Cache();
+
         cache.directMapping(memory.getMemory());
-
-
+        System.out.println();
+        System.out.println("Total Attempts: " + cache.getTotalAttempts());
+        System.out.println("Hits: " + cache.getHit());
+        System.out.println("Misses: " + cache.getMiss());
     }
 }
