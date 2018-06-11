@@ -1,3 +1,4 @@
+import cache.Cache;
 import memory.Memory;
 import reader.Reader;
 
@@ -14,10 +15,8 @@ public class Main {
             e.printStackTrace();
         }
 
-        for (String s: memory.getMemory()
-             ) {
-            System.out.println(s);
-        }
+        Cache cache = new Cache();
+        cache.directMapping(memory.getMemory());
 
 
     }
