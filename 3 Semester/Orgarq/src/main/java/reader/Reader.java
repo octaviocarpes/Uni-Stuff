@@ -1,12 +1,11 @@
 package reader;
 
-import cache.MemoryLine;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Reader {
 
@@ -21,116 +20,34 @@ public class Reader {
         }
     }
 
-    public void getCacheMapping(ArrayList<MemoryLine> cacheMap) throws IOException {
+    public void getCacheMapping(List<String> memory) throws IOException {
         String st;
 
         while ((st = bufferedReader.readLine()) != null){
-            if (st.length() == 0){
+            if (st.length() < 16){
                 continue;
+            } else if(st.length() > 16){
+                String[] memoryString = st.split(" - ");
+
+                String cacheTag = memoryString[0].substring(0,10);
+                String cacheLine = memoryString[0].substring(10,14);
+                String cacheWord = memoryString[0].substring(14,16);
+
+                String memoryTag = memoryString[2].substring(0,10);
+                String memoryLine = memoryString[2].substring(10,14);
+                String memoryWord = memoryString[2].substring(14,16);
+
+                memory.add(cacheTag + " - " + cacheLine + " - " + cacheWord + " : " + memoryTag + " - " + memoryLine + " - " + memoryWord + " : " + memoryString[1]);
+
+            } else {
+                String[] memoryLine = st.split(" - ");
+
+                String tag = memoryLine[0].substring(0,10);
+                String line = memoryLine[0].substring(10,14);
+                String word = memoryLine[0].substring(14,16);
+
+                memory.add(tag + " - " + line + " - " + word);
             }
-
-            if (st.length() > 16){
-                StringBuilder sb = new StringBuilder();
-                String[] instructions = st.split(" - ");
-                sb.append(instructions[0].charAt(0));
-                sb.append(instructions[0].charAt(1));
-                sb.append(instructions[0].charAt(2));
-                sb.append(instructions[0].charAt(3));
-                sb.append(instructions[0].charAt(4));
-                sb.append(instructions[0].charAt(5));
-                sb.append(instructions[0].charAt(6));
-                sb.append(instructions[0].charAt(7));
-                sb.append(instructions[0].charAt(8));
-                sb.append(instructions[0].charAt(9));
-
-                String tag = sb.toString();
-
-                sb = new StringBuilder();
-
-                sb.append(instructions[0].charAt(10));
-                sb.append(instructions[0].charAt(11));
-                sb.append(instructions[0].charAt(12));
-                sb.append(instructions[0].charAt(13));
-
-                String line = sb.toString();
-
-                sb = new StringBuilder();
-
-                sb.append(instructions[0].charAt(14));
-                sb.append(instructions[0].charAt(15));
-
-                String word = sb.toString();
-
-                sb = new StringBuilder();
-
-                sb.append(instructions[2].charAt(0));
-                sb.append(instructions[2].charAt(1));
-                sb.append(instructions[2].charAt(2));
-                sb.append(instructions[2].charAt(3));
-                sb.append(instructions[2].charAt(4));
-                sb.append(instructions[2].charAt(5));
-                sb.append(instructions[2].charAt(6));
-                sb.append(instructions[2].charAt(7));
-                sb.append(instructions[2].charAt(8));
-                sb.append(instructions[2].charAt(9));
-
-                String instructionDataTag = sb.toString();
-
-                sb = new StringBuilder();
-
-                sb.append(instructions[2].charAt(10));
-                sb.append(instructions[2].charAt(11));
-                sb.append(instructions[2].charAt(12));
-                sb.append(instructions[2].charAt(13));
-
-                String instructionDataLine = sb.toString();
-
-                sb = new StringBuilder();
-
-                sb.append(instructions[2].charAt(14));
-                sb.append(instructions[2].charAt(15));
-
-                String instructionDataWord = sb.toString();
-
-                MemoryLine memoryLine = new MemoryLine(tag,line,word);
-                memoryLine.setInstruction( " : "  + instructions[1] + " - ");
-                memoryLine.setInstructionData(instructionDataTag + " - " + instructionDataLine + " - " + instructionDataWord);
-
-                cacheMap.add(memoryLine);
-            }
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.append(st.charAt(0));
-            sb.append(st.charAt(1));
-            sb.append(st.charAt(2));
-            sb.append(st.charAt(3));
-            sb.append(st.charAt(4));
-            sb.append(st.charAt(5));
-            sb.append(st.charAt(6));
-            sb.append(st.charAt(7));
-            sb.append(st.charAt(8));
-            sb.append(st.charAt(9));
-
-            String tag = sb.toString();
-
-            sb = new StringBuilder();
-
-            sb.append(st.charAt(10));
-            sb.append(st.charAt(11));
-            sb.append(st.charAt(12));
-            sb.append(st.charAt(13));
-
-            String line  = sb.toString();
-
-            sb = new StringBuilder();
-
-            sb.append(st.charAt(14));
-            sb.append(st.charAt(15));
-
-            String word = sb.toString();
-
-            cacheMap.add(new MemoryLine(tag,line,word));
         }
     }
 }
