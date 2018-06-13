@@ -46,8 +46,8 @@ public class CacheLine {
         return words;
     }
 
-    public void addWord(String word){
-        if (words.size() < 4){
+    public void addWord(int size,String word){
+        if (words.size() < size){
             words.add(word);
         }
     }

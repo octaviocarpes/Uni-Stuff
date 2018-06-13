@@ -20,7 +20,7 @@ public class Reader {
         }
     }
 
-    public void getCacheMapping(List<String> memory) throws IOException {
+    public void getCacheMappingQuestionOne(List<String> memory) throws IOException {
         String st;
 
         while ((st = bufferedReader.readLine()) != null){
@@ -45,6 +45,37 @@ public class Reader {
                 String tag = memoryLine[0].substring(0,10);
                 String line = memoryLine[0].substring(10,14);
                 String word = memoryLine[0].substring(14,16);
+
+                memory.add(tag + " - " + line + " - " + word);
+            }
+        }
+    }
+
+    public void getCacheMappingQuestionTwo(List<String> memory) throws IOException {
+        String st;
+
+        while ((st = bufferedReader.readLine()) != null){
+            if (st.length() < 16){
+                continue;
+            } else if(st.length() > 16){
+                String[] memoryString = st.split(" - ");
+
+                String cacheTag = memoryString[0].substring(0,10);
+                String cacheLine = memoryString[0].substring(10,15);
+                String cacheWord = memoryString[0].substring(15,16);
+
+                String memoryTag = memoryString[2].substring(0,10);
+                String memoryLine = memoryString[2].substring(10,15);
+                String memoryWord = memoryString[2].substring(15,16);
+
+                memory.add(cacheTag + " - " + cacheLine + " - " + cacheWord + " : " + memoryTag + " - " + memoryLine + " - " + memoryWord + " : " + memoryString[1]);
+
+            } else {
+                String[] memoryLine = st.split(" - ");
+
+                String tag = memoryLine[0].substring(0,10);
+                String line = memoryLine[0].substring(10,15);
+                String word = memoryLine[0].substring(15,16);
 
                 memory.add(tag + " - " + line + " - " + word);
             }
