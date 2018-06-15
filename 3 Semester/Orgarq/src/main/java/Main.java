@@ -33,42 +33,6 @@ public class Main {
         System.out.println();
 
         cache16Bits.directMapping(memory1.getMemory());
-        System.out.println();
-        System.out.println("Total Attempts: " + cache16Bits.getTotalAttempts());
-        System.out.println("Hits: " + cache16Bits.getHit());
-        System.out.println("Misses: " + cache16Bits.getMiss());
 
-
-        Reader reader2 = new Reader();
-        Memory memory2 = new Memory();
-
-        System.out.println();
-        System.out.println("Memory Addresses:");
-        System.out.println();
-
-        try {
-            reader2.getCacheMappingQuestionTwo(memory2.getMemory());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for (String s: memory2.getMemory()
-             ) {
-            System.out.println(s);
-        }
-
-
-        System.out.println();
-        System.out.println("Direct Mapping 32 Bits:");
-        System.out.println();
-
-        Cache32Bits cache32Bits = new Cache32Bits();
-
-        cache32Bits.directMapping(memory2.getMemory());
-
-        System.out.println();
-        System.out.println("Total Attempts: " + cache32Bits.getTotalAttempts());
-        System.out.println("Hits: " + cache32Bits.getHit());
-        System.out.println("Misses: " + cache32Bits.getMiss());
     }
 }

@@ -6,7 +6,7 @@ public class CacheLine {
 
     private String line;
     private String tag;
-    private ArrayList<String> words;
+    private String[] words;
     private String targetWord;
     private boolean hit;
 
@@ -14,7 +14,7 @@ public class CacheLine {
         this.line = line;
         this.tag = "";
         this.targetWord = "";
-        this.words = new ArrayList<>();
+        this.words = new String[4];
         this.hit = false;
     }
 
@@ -42,15 +42,11 @@ public class CacheLine {
         this.hit = hit;
     }
 
-    public ArrayList<String> getWords() {
+    public String[] getWords() {
         return words;
     }
 
-    public void addWord(int size,String word){
-        if (words.size() < size){
-            words.add(word);
-        }
-    }
+
 
     public String getTargetWord() {
         return targetWord;
@@ -68,6 +64,14 @@ public class CacheLine {
         } else {
             hitstring = "Hit!";
         }
-        return "Tag: " + tag + " - " + "Line: "+ line + " - "+ "Data Chunk: " + words + " - " + " : " + targetWord + " - " + hitstring;
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[ ");
+        for (int i = 0; i < words.length ; i++) {
+            sb.append(words[i]);
+            sb.append(",");
+        }
+        sb.append(" ]");
+        return "Tag: " + tag + " - " + "Line: "+ line + " - "+ "Data Chunk: " + sb.toString() + " - " + " : " + targetWord + " - " + hitstring;
     }
 }

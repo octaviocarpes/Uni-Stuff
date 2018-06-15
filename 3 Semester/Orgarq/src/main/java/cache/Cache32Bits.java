@@ -1,6 +1,7 @@
 package cache;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Cache32Bits {
@@ -8,11 +9,13 @@ public class Cache32Bits {
     private int hit;
     private int miss;
     private int totalAttempts;
+    private HashMap<String, String> associativeMemory;
 
     public Cache32Bits() {
         this.hit = 0;
         this.miss = 0;
         this.totalAttempts = 0;
+        associativeMemory = new HashMap<>();
         lines = new ArrayList<>();
         lines.add(new CacheLine("00000"));
         lines.add(new CacheLine("00001"));
@@ -49,67 +52,7 @@ public class Cache32Bits {
     }
 
     public void directMapping(List<String> memory){
-        for (String address: memory) {
-            if (address.length() <= 22){
-                String[] memoryAdress = address.split(" - ");
-                String memorytag = memoryAdress[0];
-                String memoryline = memoryAdress[1];
-                String targetWord = memoryAdress[2];
-                String[] words = {"0","1"};
 
-                for (CacheLine cacheLine: lines) {
-                    if (cacheLine.getLine().equals(memoryline)){
-                        if (cacheLine.getTag().equals(memorytag)){
-                            hit++;
-                            totalAttempts++;
-                            cacheLine.setHit(true);
-                            cacheLine.setTargetWord(targetWord);
-                            System.out.println(cacheLine);
-                        } else {
-                            miss++;
-                            totalAttempts++;
-                            cacheLine.setTag(memorytag);
-                            cacheLine.setHit(false);
-                            cacheLine.setTargetWord(targetWord);
-                            System.out.println(cacheLine);
-                            for (String word:words) {
-                                cacheLine.addWord(2,word);
-                            }
-                        }
-                    }
-                }
-            } else {
-                String[] words = {"0","1"};
-                String[]memoryAddress = address.split(" : ");
-                String cacheAddress = memoryAddress[1];
-                String[] cacheData = cacheAddress.split(" - ");
-                String tag = cacheData[0];
-                String line = cacheData[1];
-                String word = cacheData[2];
-                for (CacheLine cacheLine:lines) {
-                    if (cacheLine.getLine().equals(line)){
-                        if (cacheLine.getTag().equals(tag)){
-                            hit++;
-                            hit++;
-                            totalAttempts++;
-                            cacheLine.setHit(true);
-                            cacheLine.setTargetWord(word);
-                            System.out.println(cacheLine);
-                        } else {
-                            miss++;
-                            totalAttempts++;
-                            cacheLine.setTag(tag);
-                            cacheLine.setHit(false);
-                            System.out.println(cacheLine);
-                            for (String s: words) {
-                                cacheLine.addWord(2,s);
-                            }
-                        }
-                    }
-                }
-
-            }
-        }
     }
 
     public int getHit() {
