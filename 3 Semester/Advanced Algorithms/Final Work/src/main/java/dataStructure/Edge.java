@@ -14,6 +14,9 @@ public class Edge {
         this.pheromoneIntensity = pheromoneIntensity;
     }
 
+    public Edge() {
+    }
+
     public int getDistance() {
         return distance;
     }

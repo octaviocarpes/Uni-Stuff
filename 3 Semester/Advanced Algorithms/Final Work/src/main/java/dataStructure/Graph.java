@@ -24,6 +24,12 @@ public class Graph {
         return edges;
     }
 
+    public void clearAllVisited(){
+        for (Vertex v :vertices) {
+            v.setVisited(false);
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

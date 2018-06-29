@@ -69,6 +69,7 @@ public class Main {
 
         System.out.println("\nAnthony Marching!");
         anthony.march(graph.getVertices().get(0), graph);
+        graph.clearAllVisited();
 
         System.out.println();
         System.out.println();
