@@ -24,9 +24,23 @@ public class Graph {
         return edges;
     }
 
+    public boolean checkAllVisited(){
+        for (Vertex v:vertices) {
+            if (v.isVisited()){
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void clearAllVisited(){
         for (Vertex v :vertices) {
             v.setVisited(false);
+        }
+        for (Edge e:edges) {
+            e.setVisited(false);
         }
     }
 

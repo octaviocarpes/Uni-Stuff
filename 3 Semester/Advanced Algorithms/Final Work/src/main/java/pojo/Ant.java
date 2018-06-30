@@ -4,9 +4,7 @@ import dataStructure.Edge;
 import dataStructure.Graph;
 import dataStructure.Vertex;
 import sun.misc.Queue;
-
 import java.util.List;
-import java.util.Random;
 
 public class Ant {
 
@@ -17,81 +15,86 @@ public class Ant {
     }
 
 
-//    TODO: FIx null pointer at line 90
+
     public void march(Vertex checkpoint, Graph graph){
-        if (checkpoint.getName().equals("A") && checkpoint.isVisited()){
-            return;
-        }
-//        int max = checkpoint.getAdjacents().size() + 1;
-//        Random random = new Random();
-//        int randomIndex = random.nextInt(max - 1);
-//
-//        String aName = checkpoint.getName();
-//        String bName = checkpoint.getAdjacents().get(randomIndex).getName();
-//
-////        Go from A to B
-////         - Find Edge in edges
-////         - Mark B as Visited
-////         - Print Path
-//
-//        Vertex b = getVertexB(bName,graph);
-//
-//        for (Edge e: graph.getEdges()) {
-//            if ((aName.equals(e.getA()) && bName.equals(e.getB())) || (aName.equals(e.getB()) && bName.equals(e.getA()))){
-//                e.setPheromoneIntensity(e.getPheromoneIntensity() + (pheromone - e.getDistance()));
-//                b.setVisited(true);
-//                System.out.println(checkpoint.getName() + " -> " + b.getName() + " Pheromone Intensity: " + e.getPheromoneIntensity());
-//           }
-//        }
-//
-//        march(b, graph);
-
-        Queue<Vertex> queue = new Queue();
-
         for (Vertex adj: checkpoint.getAdjacents()) {
-            if (!adj.isVisited()){
-                queue.enqueue(adj);
-            }
-        }
-
-        while (!queue.isEmpty()){
-            try {
-                Edge edge = new Edge();
-                Vertex vertex = queue.dequeue();
-                vertex.setVisited(true);
-//                Find corresponding edge
-                for (Edge e: graph.getEdges()) {
-                    if ((checkpoint.getName().equals(e.getA()) && vertex.getName().equals(e.getB())) ||
-                            (checkpoint.getName().equals(e.getB()) && vertex.getName().equals(e.getA()))){
-                        edge = e;
-                    }
-                }
-
-                Vertex b = getVertexB(edge.getB(), graph);
-                for (Vertex adj: b.getAdjacents()) {
-                    queue.enqueue(adj);
-                }
-                System.out.println(b);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            Edge currentEdge = getEdge(checkpoint, adj, graph);
+            if (currentEdge.isVisited()){
+                continue;
+            } else {
+                currentEdge.setPheromoneIntensity(currentEdge.getPheromoneIntensity() + (pheromone - currentEdge.getDistance()));
+                currentEdge.setVisited(true);
             }
         }
     }
 
     public void followPheromone(Vertex checkpoint, Graph graph){
-        if (checkpoint.getName().equals("A") && checkpoint.isVisited()){
+        if (graph.checkAllVisited()){
             return;
         }
-
-    }
-
-    private Vertex getVertexB(String bName, Graph graph){
-        for (Vertex v: graph.getVertices()) {
-            if (bName.equals(v.getName())){
-                return v;
+        Edge highestPheromone = new Edge();
+        highestPheromone.setPheromoneIntensity(0);
+        for (Vertex adj: checkpoint.getAdjacents()) {
+            Edge currentEdge = getEdge(checkpoint, adj, graph);
+            if (highestPheromone.getPheromoneIntensity() < currentEdge.getPheromoneIntensity()){
+                highestPheromone = currentEdge;
             }
         }
-        return new Vertex("");
+
+        if (highestPheromone.isVisited()){
+//            search for unvisited edges of checkpoint
+            for (Vertex adj:checkpoint.getAdjacents()) {
+                if (adj.isVisited()){
+                    continue;
+                } else {
+                    followPheromone(adj, graph);
+                }
+            }
+        } else {
+            highestPheromone.setVisited(true);
+            Vertex b = getVertexB(checkpoint, highestPheromone, graph);
+            b.setVisited(true);
+            int size = graph.getEdges().size() - 1;
+            for (int i = 0; i < size; i++) {
+                if (highestPheromone.getA() == null){
+                    return;
+                }
+                if ((highestPheromone.getA().equals(graph.getEdges().get(i).getA()) && highestPheromone.getB().equals(graph.getEdges().get(i).getB())) ||
+                        (highestPheromone.getA().equals(graph.getEdges().get(i).getB()) && highestPheromone.getB().equals(graph.getEdges().get(i).getA()))){
+                    graph.getEdges().remove(i);
+                }
+            }
+            System.out.println(checkpoint.getName() + " -> " + b.getName());
+            followPheromone(b, graph);
+        }
+    }
+
+    private Edge getEdge(Vertex a, Vertex b, Graph graph){
+        Edge correspondingEdge = new Edge();
+        for (Edge edge:graph.getEdges()) {
+             if ((a.getName().equals(edge.getA()) && b.getName().equals(edge.getB()))||
+                     (a.getName().equals(edge.getB()) && b.getName().equals(edge.getA()))){
+                 correspondingEdge = edge;
+             }
+        }
+        return correspondingEdge;
+    }
+
+    private Vertex getVertexB(Vertex checkpoint,Edge edge, Graph graph){
+        Vertex response = new Vertex("");
+        if (checkpoint.getName().equals(edge.getA())){
+            for (Vertex v:graph.getVertices()) {
+                if (v.getName().equals(edge.getB())){
+                    return v;
+                }
+            }
+        } else {
+            for (Vertex v: graph.getVertices()){
+                if (v.getName().equals(edge.getA())){
+                    return v;
+                }
+            }
+        }
+        return response;
     }
 }

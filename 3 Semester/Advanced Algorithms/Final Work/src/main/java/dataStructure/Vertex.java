@@ -6,11 +6,13 @@ import java.util.List;
 public class Vertex {
 
     private String name;
+    private int distance;
     private boolean visited;
     private List<Vertex> adjacents;
 
     public Vertex(String name) {
         this.name = name;
+        this.distance = 0;
         this.adjacents = new ArrayList();
         this.visited = false;
     }
@@ -22,6 +24,14 @@ public class Vertex {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
     public List<Vertex> getAdjacents() {

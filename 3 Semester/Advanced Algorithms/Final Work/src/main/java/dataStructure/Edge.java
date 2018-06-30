@@ -6,15 +6,25 @@ public class Edge {
     private String a;
     private String b;
     private int pheromoneIntensity;
+    private boolean visited;
 
     public Edge(int distance, String a, String b, int pheromoneIntensity) {
         this.distance = distance;
         this.a = a;
         this.b = b;
         this.pheromoneIntensity = pheromoneIntensity;
+        this.visited = false;
     }
 
     public Edge() {
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 
     public int getDistance() {

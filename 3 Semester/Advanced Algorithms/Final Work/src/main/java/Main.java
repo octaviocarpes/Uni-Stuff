@@ -56,19 +56,20 @@ public class Main {
         edges.add(new Edge(8,"B", "C", 0));
         edges.add(new Edge(1,"B", "F", 0));
         edges.add(new Edge(1,"C", "F", 0));
-        edges.add(new Edge(2,"C", "D", 0));
-        edges.add(new Edge(1,"D", "F", 0));
-        edges.add(new Edge(4,"D", "E", 0));
-        edges.add(new Edge(1,"E", "F", 0));
+        edges.add(new Edge(1,"C", "D", 0));
+        edges.add(new Edge(2,"D", "F", 0));
+        edges.add(new Edge(1,"D", "E", 0));
+        edges.add(new Edge(2,"E", "F", 0));
 
         Graph graph = new Graph(vertices, edges);
-
-        System.out.println(graph.toString());
 
         Ant anthony = new Ant();
 
         System.out.println("\nAnthony Marching!");
-        anthony.march(graph.getVertices().get(0), graph);
+        for (int i = 0; i < graph.getVertices().size(); i++) {
+            anthony.march(graph.getVertices().get(i), graph);
+        }
+        System.out.println(graph.toString());
         graph.clearAllVisited();
 
         System.out.println();
